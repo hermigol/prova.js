@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <script src="script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de IMC</h1>
+        <form id="imcForm">
+            <div>
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" required>
+            </div>
+            <div>
+                <label for="altura">Altura (cm):</label>
+                <input type="number" id="altura" required>
+            </div>
+            <div>
+                <label for="peso">Peso (kg):</label>
+                <input type="number" id="peso" required>
+            </div>
+            <button type="submit">Calcular IMC</button>
+        </form>
+        <div id="resultado" class="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('imcForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita o envio do formulário
+
+            // Captura os valores dos campos de entrada
+            let nome = document.getElementById('nome').value;
+            let alturaCm = parseFloat(document.getElementById('altura').value);
+            let peso = parseFloat(document.getElementById('peso').value);
+
+            // Converte a altura de centímetros para metros
+            let alturaM = alturaCm / 100;
+
+            // Calcula o IMC
+            let imc = peso / (alturaM * alturaM);
+
+            // Classifica o IMC
+            let classificacao;
+            if (imc < 16) {
+                classificacao = "Baixo peso muito grave";
+            } else if (imc >= 16 && imc <= 16.99) {
+                classificacao = "Baixo peso grave";
+            } else if (imc >= 17 && imc <= 18.49) {
+                classificacao = "Baixo peso";
+            } else if (imc >= 18.5 && imc <= 24.99) {
+                classificacao = "Peso normal";
+            } else if (imc >= 25 && imc <= 29.99) {
+                classificacao = "Sobrepeso";
+            } else if (imc >= 30 && imc <= 34.99) {
+                classificacao = "Obesidade grau I";
+            } else if (imc >= 35 && imc <= 39.99) {
+                classificacao = "Obesidade grau II";
+            } else {
+                classificacao = "Obesidade grau III";
+            }
+
+            // Exibe os resultados
+            let resultado = document.getElementById('resultado');
+            resultado.innerHTML = `<p>Nome: ${nome}</p>
+                                   <p>IMC: ${imc.toFixed(2)}</p>
+                                   <p>Classificação: ${classificacao}</p>`;
+        });
+    </script>
+</body>
+</html>
